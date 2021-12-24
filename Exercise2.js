@@ -22,4 +22,26 @@ function isValidSubsequence(array, sequence) {
     }
 }
 // ^^^^^^^^^^^^^^^^^^^YAY IT WORKS^^^^^^^^^^^^^^^^
-// My time complexity is O(n) Space not sure but probably O(n)
+// My time complexity is O(n) Space not sure but probably O(n) - where n is the length of the array
+
+// Algoexpert solution
+function isValidSubsequence(array, sequence) {
+    // Write your code here.
+    let seqIdx = 0;
+    for (const value of array) {
+        if (seqIdx === sequence.length) break;
+        if (sequence[seqIdx] === value) seqIdx++;
+    }
+    return seqIdx === sequence.length;
+}
+// Same idea but using while loop:
+function isValidSubsequence(array, sequence) {
+    // Write your code here.
+    let seqIdx = 0;
+    let arrIdx = 0;
+    while (arrIdx < array.length && seqIdx < sequence.length) {
+        if (array[arrIdx] === sequence[seqIdx]) seqIdx++;
+        arrIdx++;
+    }
+    return seqIdx === sequence.length;
+}
