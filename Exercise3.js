@@ -50,3 +50,4 @@ function sortedSquaredArray(array) {
     }
     return sortedSquares;
 }
+// Time complexity is O(n) Space O(n) - where n is the length of the array
