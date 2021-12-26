@@ -47,5 +47,5 @@ function tournamentWinner(competitions, results) {
     return winner;
 }
 // ^^^^^^^^^^^^^^^^^^^YAY IT WORKS^^^^^^^^^^^^^^^^
-// My time complexity is O(n) Space O(n) - where n is the length of the array
+// My time complexity is O(n) Space O(k) - where n is the length of the array & k is the number of teams;
 
