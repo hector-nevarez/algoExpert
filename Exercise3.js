@@ -28,4 +28,25 @@ function sortedSquaredArray(array) {
     }
     return result;
 }
+// ^^^^^^^^^^^^^^^^^^^YAY IT WORKS^^^^^^^^^^^^^^^^
+// My time complexity is O(n*log(n)) Space O(n) - where n is the length of the array
 
+// Another solution (this is from algo expert):
+function sortedSquaredArray(array) {
+    const sortedSquares = [];
+    let smallerValueIdx = 0;
+    let largerValueIdx = array.length - 1;
+
+    for (let idx = array.length - 1; idx >= 0; idx--) {
+        const smallerValue = array[smallerValueIdx];
+        const largerValue = array[largerValueIdx];
+        if (Math.abs(smallerValue) > Math.abs(largerValue)) {
+            sortedSquares[idx] = smallerValue * smallerValue;
+            smallerValueIdx++;
+        } else {
+            sortedSquares[idx] = largerValue * largerValue;
+            largerValueIdx--;
+        }
+    }
+    return sortedSquares;
+}
