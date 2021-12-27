@@ -59,8 +59,9 @@ function findClosestValueInBst(tree, target) {
 }
 
 const findClosestValueHelperFunction = function (tree, target, closest) {
-    console.log('This is the current value:', tree.value);
-    if (tree.value === null) {
+    // console.log('This is the current value:', tree);
+    if (tree === null) {
+        console.log('This is the closest in null', closest);
         return closest;
     }
     if (Math.abs(tree.value - target) < Math.abs(closest - target)) {
@@ -71,6 +72,7 @@ const findClosestValueHelperFunction = function (tree, target, closest) {
     } else if (tree.value < target) {
         return findClosestValueHelperFunction(tree.right, target, closest);
     } else {
+        console.log('This is the closest in null', closest);
         return closest;
     }
 }
@@ -79,33 +81,46 @@ const findClosestValueHelperFunction = function (tree, target, closest) {
 // AVERAGE Time complexity is O(log(n)) | Space O(log(n)) - where n is the length of the array
 
 
-// const tree = [
-//     { "id": "100", "left": "5", "right": "502", "value": 100 },
-//     { "id": "502", "left": "204", "right": "55000", "value": 502 },
-//     { "id": "55000", "left": "1001", "right": null, "value": 55000 },
-//     { "id": "1001", "left": null, "right": "4500", "value": 1001 },
-//     { "id": "4500", "left": null, "right": null, "value": 4500 },
-//     { "id": "204", "left": "203", "right": "205", "value": 204 },
-//     { "id": "205", "left": null, "right": "207", "value": 205 },
-//     { "id": "207", "left": "206", "right": "208", "value": 207 },
-//     { "id": "208", "left": null, "right": null, "value": 208 },
-//     { "id": "206", "left": null, "right": null, "value": 206 },
-//     { "id": "203", "left": null, "right": null, "value": 203 },
-//     { "id": "5", "left": "2", "right": "15", "value": 5 },
-//     { "id": "15", "left": "5-2", "right": "22", "value": 15 },
-//     { "id": "22", "left": null, "right": "57", "value": 22 },
-//     { "id": "57", "left": null, "right": "60", "value": 57 },
-//     { "id": "60", "left": null, "right": null, "value": 60 },
-//     { "id": "5-2", "left": null, "right": null, "value": 5 },
-//     { "id": "2", "left": "1", "right": "3", "value": 2 },
-//     { "id": "3", "left": null, "right": null, "value": 3 },
-//     { "id": "1", "left": "-51", "right": "1-2", "value": 1 },
-//     { "id": "1-2", "left": null, "right": "1-3", "value": 1 },
-//     { "id": "1-3", "left": null, "right": "1-4", "value": 1 },
-//     { "id": "1-4", "left": null, "right": "1-5", "value": 1 },
-//     { "id": "1-5", "left": null, "right": null, "value": 1 },
-//     { "id": "-51", "left": "-403", "right": null, "value": -51 },
-//     { "id": "-403", "left": null, "right": null, "value": -403 }
-// ];
-// const target= -1;
-// console.log(findClosestValueInBst(tree, target));
+let tree = [
+    { "id": "100", "left": "5", "right": "502", "value": 100 },
+    { "id": "502", "left": "204", "right": "55000", "value": 502 },
+    { "id": "55000", "left": "1001", "right": null, "value": 55000 },
+    { "id": "1001", "left": null, "right": "4500", "value": 1001 },
+    { "id": "4500", "left": null, "right": null, "value": 4500 },
+    { "id": "204", "left": "203", "right": "205", "value": 204 },
+    { "id": "205", "left": null, "right": "207", "value": 205 },
+    { "id": "207", "left": "206", "right": "208", "value": 207 },
+    { "id": "208", "left": null, "right": null, "value": 208 },
+    { "id": "206", "left": null, "right": null, "value": 206 },
+    { "id": "203", "left": null, "right": null, "value": 203 },
+    { "id": "5", "left": "2", "right": "15", "value": 5 },
+    { "id": "15", "left": "5-2", "right": "22", "value": 15 },
+    { "id": "22", "left": null, "right": "57", "value": 22 },
+    { "id": "57", "left": null, "right": "60", "value": 57 },
+    { "id": "60", "left": null, "right": null, "value": 60 },
+    { "id": "5-2", "left": null, "right": null, "value": 5 },
+    { "id": "2", "left": "1", "right": "3", "value": 2 },
+    { "id": "3", "left": null, "right": null, "value": 3 },
+    { "id": "1", "left": "-51", "right": "1-2", "value": 1 },
+    { "id": "1-2", "left": null, "right": "1-3", "value": 1 },
+    { "id": "1-3", "left": null, "right": "1-4", "value": 1 },
+    { "id": "1-4", "left": null, "right": "1-5", "value": 1 },
+    { "id": "1-5", "left": null, "right": null, "value": 1 },
+    { "id": "-51", "left": "-403", "right": null, "value": -51 },
+    { "id": "-403", "left": null, "right": null, "value": -403 }
+];
+const createTree = function (treeArr) {
+    let newTree = new BST(treeArr[0].value);
+    let oriHead = newTree;
+    for (let i = 0; i < treeArr.length; i++) {
+        // newTree.value= treeArr[i].value
+        newTree.left = new BST(treeArr[i].left);
+        newTree.right = new BST(treeArr[i].right);
+        // newTree= newTree[i].value;
+    }
+    return oriHead;
+}
+tree = createTree(tree);
+console.log('This is the actual tree:', tree);
+const target = -1;
+// findClosestValueInBst(tree, target);
