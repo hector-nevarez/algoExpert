@@ -49,7 +49,7 @@ class BST {
 //             return findClosestValueInBst(tree.right, target);
 //         }
 //     }
-//     // Works but nit for all the cases, for example the parent node is not the closest in value to the target.
+//     // Works but not for all the cases, for example the parent node is not the closest in value to the target.
 // }
 
 // Solution (from algoexpert :(...couldnt sorted out)
