@@ -27,5 +27,6 @@ function bubbleSort(array) {
         }
     }
     return array;
-
 }
+// ^^^^^^^^^^^^^^^^^^^YAY IT WORKS^^^^^^^^^^^^^^^^
+// My time complexity is O(n^2) Space O(1) - where n is the length of the array
