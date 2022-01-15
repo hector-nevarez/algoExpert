@@ -98,24 +98,87 @@ class BST {
         this.rigth = null;
         this.left = null;
     }
-    
+    // Avergae: O(log(n)) Time  | O(1) Space
+    // Worst:   O(n)      Time  | O(1) Space
     insert(value) {
         let currentNode = this;
         while (true) {
             if (currentNode.value > value) {
                 if (currentNode.left) {
                     currentNode = currentNode.left;
-                } else{
-                    currentNode.left= new BST(value);
+                } else {
+                    currentNode.left = new BST(value);
+                    break;
                 }
-            } else if (currentNode.value < value){
-                if(currentNode.right){
-                    currentNode= currentNode.right;
-                } else{
-                    currentNode.right= new BST(value);
+            } else if (currentNode.value < value) {
+                if (currentNode.right) {
+                    currentNode = currentNode.right;
+                } else {
+                    currentNode.right = new BST(value);
+                    break;
                 }
             }
         }
         return this;
+    }
+    // Avergae: O(log(n)) Time  | O(1) Space
+    // Worst:   O(n)      Time  | O(1) Space
+    contains(value) {
+        let currentNode = this;
+        while (currentNode) {
+            if (currentNode.value > value) {
+                currentNode = currentNode.left;
+            } else if (currentNode.value < value) {
+                currentNode = currentNode.right;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    remove(value, parent = null) {
+        let currentNode = this;
+        while (currentNode) {
+            if (currentNode.value > value) {
+                parent = currentNode;
+                currentNode = currentNode.left;
+            } else if (currentNode.value < value) {
+                parent = currentNode;
+                currentNode = currentNode.right;
+            } else {
+                if (currentNode.left && currentNode.right) {
+                    currentNode.value = currentNode.right.getMinValue();
+                    currentNode.right.remove(currentNode.value, currentNode);
+                } else if (!parent) {
+                    if (currentNode.left) {
+                        currentNode.value = currentNode.left.value;
+                        currentNode.left = currentNode.left.left;
+                        currentNode.right = currentNode.left.right;
+                    } else if (currentNode.right) {
+                        currentNode.value = currentNode.right.value;
+                        currentNode.left = currentNode.rigth.left;
+                        currentNode.rigth = currentNode.right.right;
+                    } else {
+                        // Do nothing cause is a single-node
+                        break;
+                    }
+                } else if (parent.left === currentNode) {
+                    parent.left = currentNode.left ? currentNode.left : currentNode.right;
+                } else if (parent.right === currentNode) {
+                    parent.right = currentNode.rigth ? currentNode.left : currentNode.rigth;
+                }
+                break;
+            }
+        }
+        return this;
+    }
+
+    getMinValue() {
+        let currentNode = this;
+        while (currentNode.left) {
+            currentNode = currentNode.left;
+        }
+        return currentNode.value;
     }
 }
