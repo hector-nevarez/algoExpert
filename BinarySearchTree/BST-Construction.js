@@ -95,7 +95,7 @@ class BST {
 class BST {
     constructor(value) {
         this.value = value;
-        this.rigth = null;
+        this.right = null;
         this.left = null;
     }
     // Avergae: O(log(n)) Time  | O(1) Space
@@ -110,7 +110,7 @@ class BST {
                     currentNode.left = new BST(value);
                     break;
                 }
-            } else if (currentNode.value < value) {
+            } else if (currentNode.value <= value) {
                 if (currentNode.right) {
                     currentNode = currentNode.right;
                 } else {
@@ -136,7 +136,8 @@ class BST {
         }
         return false;
     }
-
+    // Avergae: O(log(n)) Time  | O(1) Space
+    // Worst:   O(n)      Time  | O(1) Space
     remove(value, parent = null) {
         let currentNode = this;
         while (currentNode) {
@@ -153,20 +154,20 @@ class BST {
                 } else if (!parent) {
                     if (currentNode.left) {
                         currentNode.value = currentNode.left.value;
+                        currentNode.right = currentNode.left.right; // <-- If you swap this with the next line there will be an error. Why?
                         currentNode.left = currentNode.left.left;
-                        currentNode.right = currentNode.left.right;
                     } else if (currentNode.right) {
                         currentNode.value = currentNode.right.value;
-                        currentNode.left = currentNode.rigth.left;
-                        currentNode.rigth = currentNode.right.right;
+                        currentNode.left = currentNode.right.left;
+                        currentNode.right = currentNode.right.right;
                     } else {
                         // Do nothing cause is a single-node
-                        break;
+                        // break;
                     }
                 } else if (parent.left === currentNode) {
                     parent.left = currentNode.left ? currentNode.left : currentNode.right;
                 } else if (parent.right === currentNode) {
-                    parent.right = currentNode.rigth ? currentNode.left : currentNode.rigth;
+                    parent.right = currentNode.left ? currentNode.left : currentNode.right;
                 }
                 break;
             }
