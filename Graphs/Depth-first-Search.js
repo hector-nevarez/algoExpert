@@ -11,7 +11,7 @@ class Node {
         this.children.push(new Node(name));
         return this;
     }
-
+    // O(v + e) Time | O(v) Space ; where "v" stands for the vertices of the tree and "e" for the egdes
     depthFirstSearch(array){
         array.push(this.name);
         for ( let child of this.children){
