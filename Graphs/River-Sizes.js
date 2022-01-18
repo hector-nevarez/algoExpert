@@ -82,3 +82,6 @@ function getNeighbors(row, column, matrix, visited) {
     }
     return unvisitedNeighbors;
 }
+
+// Big O of:
+// O(r*c) time | O(r*c) space ; where "r" is the rows & the "c" is the columns
