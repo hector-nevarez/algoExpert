@@ -1,4 +1,4 @@
-// Create a function that returns the shortest path that a police officer has to take in order to arrive to a designated location/event in a map.
+// Create a function that returns the length/steps of the shortest path that a police officer has to take in order to arrive to a designated location/event in a map.
 // The input value that the function will take in as an argument is a string version of the following map:
 
 // map = [
@@ -12,43 +12,93 @@
 // Actual input that the function will take:
 map = "O__;_X_T;___"
 
+// Output
+// 4
+
 function officerPath(map) {
-    let matrixRow = [];
+    // let matrixRow = [];
     let visited = [];
     let visitedRow = [];
     // lets find de officer on the map
     const offLocation = [];
     // lets do the map a matrix
-    let mapMatrix = map.split(';').map((row, rowIdx) => {
-        matrixRow = [];
-        for (let colIdx = 0; colIdx < row.length; colIdx++) {
-            if (row[colIdx] === "O") {
-                offLocation.push(rowIdx, colIdx);
-            }
-            matrixRow.push(row[colIdx]);
-        }
-        return matrixRow;
-    });
+    // let mapMatrix = map.split(';').map((row, rowIdx) => {
+    //     matrixRow = [];
+    //     for (let colIdx = 0; colIdx < row.length; colIdx++) {
+    //         if (row[colIdx] === "O") {
+    //             offLocation.push(rowIdx, colIdx);
+    //         }
+    //         matrixRow.push(row[colIdx]);
+    //     }
+    //     return matrixRow;
+    // });
     // console.log(map);
     // console.log(offLocation);
     // We will create a copy of the map, but with boolean values & will set every "X" to "true";
-    visited = map.split(";").map((column) => {
+    visited = map.split(";").map((column, rowIdx) => {
         visitedRow = [];
         for (let idx = 0; idx < column.length; idx++) {
-            if (column[idx] === "X" || column[idx] === "O") {
+            if (column[idx] === "X") {
                 visitedRow.push(true);
             } else if (column[idx] === "T") {
-                visitedRow.push("T")
+                visitedRow.push("T");
+            } else if (column[idx] === "O") {
+                visitedRow.push("O");
+                offLocation.push(rowIdx, idx);
             } else {
                 visitedRow.push(false);
             }
         }
         return visitedRow;
     });
-    console.log(visited);
-
-
+    // console.log(visited);
+    // Will create a queue for all the nodes of the matrix we will have to visit
+    const nodesToVisit = [[offLocation[0], offLocation[1]]];
+    let nodesCount = 0;
+    while (nodesToVisit.length) {
+        const currentNode = nodesToVisit.shift();
+        let row = currentNode[0];
+        let column = currentNode[1];
+        if (visited[row][column]) {
+            continue;
+        }
+        // else if (visited[row][column] === "O") {
+        //     if (row > 0 && !visited[row - 1][column]) {
+        //         nodesToVisit.push([row - 1, column]);
+        //     }
+        //     if (row < visited.length && !visited[row + 1][column]) {
+        //         nodesToVisit.push([row + 1, column]);
+        //     }
+        //     if (column > 0 && !visited[row][column - 1]) {
+        //         nodesToVisit.push([row, column - 1]);
+        //     }
+        //     if (column < visited[row].length && !visited[row][column + 1]) {
+        //         nodesToVisit.push([row, column + 1]);
+        //     }
+        //     visited[row][column]= true;
+        // }
+        else if (visited[row][column] === "T") {
+            // nodesCount++;
+            return nodesCount;
+        } else {
+            if (row > 0 && !visited[row - 1][column]) {
+                nodesToVisit.push([row - 1, column]);
+            }
+            if (row < visited.length && !visited[row + 1][column]) {
+                nodesToVisit.push([row + 1, column]);
+            }
+            if (column > 0 && !visited[row][column - 1]) {
+                nodesToVisit.push([row, column - 1]);
+            }
+            if (column < visited[row].length && !visited[row][column + 1]) {
+                nodesToVisit.push([row, column + 1]);
+            }
+            visited[row][column] = true;
+            nodesCount++;
+        }
+    }
+    return nodesCount;
 };
 
 
-officerPath(map);
+console.log(officerPath(map));
