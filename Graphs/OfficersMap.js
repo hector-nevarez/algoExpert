@@ -43,7 +43,7 @@ function officerPath(map) {
             } else if (column[idx] === "T") {
                 visitedRow.push("T");
             } else if (column[idx] === "O") {
-                visitedRow.push("O");
+                visitedRow.push(false);
                 offLocation.push(rowIdx, idx);
             } else {
                 visitedRow.push(false);
@@ -51,51 +51,41 @@ function officerPath(map) {
         }
         return visitedRow;
     });
-    // console.log(visited);
+    console.log(visited);
     // Will create a queue for all the nodes of the matrix we will have to visit
     const nodesToVisit = [[offLocation[0], offLocation[1]]];
     let nodesCount = 0;
-    while (nodesToVisit.length) {
-        const currentNode = nodesToVisit.shift();
+    let currentNode;
+    while (true) {//nodesToVisit.length
+        if (nodesToVisit.length < 1) {
+            break;
+        }
+        currentNode = nodesToVisit.shift();
+        console.log('This is the currentNode:', currentNode);
         let row = currentNode[0];
         let column = currentNode[1];
         if (visited[row][column]) {
             continue;
         }
-        // else if (visited[row][column] === "O") {
-        //     if (row > 0 && !visited[row - 1][column]) {
-        //         nodesToVisit.push([row - 1, column]);
-        //     }
-        //     if (row < visited.length && !visited[row + 1][column]) {
-        //         nodesToVisit.push([row + 1, column]);
-        //     }
-        //     if (column > 0 && !visited[row][column - 1]) {
-        //         nodesToVisit.push([row, column - 1]);
-        //     }
-        //     if (column < visited[row].length && !visited[row][column + 1]) {
-        //         nodesToVisit.push([row, column + 1]);
-        //     }
-        //     visited[row][column]= true;
-        // }
-        else if (visited[row][column] === "T") {
-            // nodesCount++;
+        if (visited[row][column] === "T") {
             return nodesCount;
-        } else {
-            if (row > 0 && !visited[row - 1][column]) {
-                nodesToVisit.push([row - 1, column]);
-            }
-            if (row < visited.length && !visited[row + 1][column]) {
-                nodesToVisit.push([row + 1, column]);
-            }
-            if (column > 0 && !visited[row][column - 1]) {
-                nodesToVisit.push([row, column - 1]);
-            }
-            if (column < visited[row].length && !visited[row][column + 1]) {
-                nodesToVisit.push([row, column + 1]);
-            }
-            visited[row][column] = true;
-            nodesCount++;
         }
+        if (row > 0 && visited[row - 1][column] === false) {
+            nodesToVisit.push([row - 1, column]);
+        }
+        if (row < visited.length - 1 && visited[row + 1][column] === false) {
+            nodesToVisit.push([row + 1, column]);
+        }
+        if (column > 0 && visited[row][column - 1] === false) {
+            nodesToVisit.push([row, column - 1]);
+        }
+        if (column < visited[row].length - 1 && visited[row][column + 1] === false) {
+            nodesToVisit.push([row, column + 1]);
+        }
+        visited[row][column] = true;
+        nodesCount++;
+        console.log('This is the node queue:', nodesToVisit);
+        console.log('-------------------------------------------------');
     }
     return nodesCount;
 };
