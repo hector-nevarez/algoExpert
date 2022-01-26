@@ -67,20 +67,21 @@ function officerPath(map) {
         if (visited[row][column]) {
             continue;
         }
-        if (visited[row][column] === "T") {
-            return nodesCount;
+        if (visited[row][column] == "T") {
+            // return nodesCount;
+            break;
         }
-        if (row > 0 && visited[row - 1][column] === false) {
+        if (row > 0 && (visited[row - 1][column] === false || visited[row - 1][column] == "T")) {
             nodesToVisit.push([row - 1, column]);
         }
-        if (row < visited.length - 1 && visited[row + 1][column] === false) {
+        else if (column < visited[row].length - 1 && (visited[row][column + 1] === false || visited[row][column + 1] == "T")) {
+            nodesToVisit.push([row, column + 1]);
+        }
+        else if (row < visited.length - 1 && (visited[row + 1][column] === false || visited[row + 1][column] == "T")) {
             nodesToVisit.push([row + 1, column]);
         }
-        if (column > 0 && visited[row][column - 1] === false) {
+        else if (column > 0 && (visited[row][column - 1] === false || visited[row][column - 1] == "T")) {
             nodesToVisit.push([row, column - 1]);
-        }
-        if (column < visited[row].length - 1 && visited[row][column + 1] === false) {
-            nodesToVisit.push([row, column + 1]);
         }
         visited[row][column] = true;
         nodesCount++;
